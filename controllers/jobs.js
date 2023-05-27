@@ -1,3 +1,4 @@
+const Job = require('../models/job');
 
 
 let getJobs = async (req,res)=>{
@@ -5,7 +6,7 @@ let getJobs = async (req,res)=>{
         let jobs = await Job.find();
         res.status(200).json({jobs});
     } catch (error) {
-        res.status(500).json({error});
+        res.status(500).json(error);
     }
 }
 

@@ -1,4 +1,5 @@
-
+// bdl kolch l mongoose 
+const User = require('../models/User')
 
 let login  = (req,res)=>{
     const { username, password } = req.body
