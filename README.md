@@ -1,5 +1,5 @@
 # Jobs-api-NodeJs
- A Job Api Built Using Nodejs , express , mongoose  , 
+ A Job Api Built Using Nodejs , express , mongoose, and other npm packages to summerize the process of auth and crud operations apis
  
 ## Screenshots 
  
