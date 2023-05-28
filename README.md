@@ -33,6 +33,11 @@
 - following best Practises and Clean Code Concepts
 - Easy To Follow and Read
 - Follow The Mvc Architecture
+## tech used
+- express
+- mongoose
+- cors
+
 ## Author
 - Fares Bekkouche
 ## Contrubution
