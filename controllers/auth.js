@@ -1,6 +1,4 @@
-// bdl kolch l mongoose 
 const User = require('../models/User')
-const bcrypt = require('bcryptjs')
 
 let login  = async  (req,res)=>{
     const { email, password } = req.body;
@@ -23,19 +21,15 @@ let login  = async  (req,res)=>{
 }
 
 let register = async (req,res)=>{
-    const { username, email, password } = req.body
+    const { username, email, password } = req.body;
     if (!username || !password || !email) {
         return res.status(400).json({ msg: 'fill all the credentials' })
     }
-
-    let userData = {
-        username,
-        email,
-        password
-    }
+    let userData = {username,email,password} ; 
 
     const user =  await User.create(...userData);
-    
+    user.createJwt();
+
     res.status(200).json({ msg: 'user created', ...user })
 }
 
