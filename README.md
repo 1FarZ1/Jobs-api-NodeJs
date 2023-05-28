@@ -36,6 +36,11 @@
 ## tech used
 - express
 - mongoose
+- json-web-token
+- express-rate-limit
+- helmet 
+- xss-clean
+- Swagger 
 - cors
 
 ## Author
