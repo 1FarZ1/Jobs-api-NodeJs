@@ -30,7 +30,7 @@ let login  = async  (req,res)=>{
         }    
         const token = user.createJWT();
     
-        return res.status(200).json({ msg: 'user logged in successfully ', token })
+        res.status(200).json({ user: { name: user.name }, token })
 
     } catch (error) {
         console.log(error);

@@ -67,7 +67,10 @@ let updateJob = async (req,res)=>{
 let deleteJob = async (req,res)=>{
     try {
         let job = await Job.findByIdAndDelete(req.params.id);
-        res.status(200).json({job});
+        res.status(200).json({
+            msg:"Job deleted successfully",
+            job
+        });
     } catch (error) {
         res.status(500).json({error});
     }
