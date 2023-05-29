@@ -1,7 +1,7 @@
 const Job = require('../models/job');
 
 
-let getJobs = async (req,res)=>{
+let getAllJobs = async (req,res)=>{
     try {
         let jobs = await Job.find({
             createdBy:req.user.userId
@@ -18,7 +18,13 @@ let getJob = async (req,res)=>{
             return res.status(400).json({error:"Please provide job id"});
         }
 
-        let job = await Job.findById(req.params.id);
+        let job = await Job.findOne({
+            _id:req.params.id,
+            createdBy:req.user.userId
+        });
+        if(!job){
+            return res.status(404).json({error:"Job not found"});
+        }
         res.status(200).json({job});
     } catch (error) {
         res.status(500).json({
@@ -77,7 +83,7 @@ let deleteJob = async (req,res)=>{
 }
 
 module.exports = {
-    getJobs,
+    getJobs: getAllJobs,
     getJob,
     createJob,
     updateJob,
