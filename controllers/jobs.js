@@ -55,27 +55,50 @@ let createJob = async (req,res)=>{
 }
 
 let updateJob = async (req,res)=>{
-    try{
-        let job  = Job.findById(req.params.id);
-        if(!job){
-            res.status(404).json({error:"Job not found"});
+    try {
+        const {company,position} = req.body;
+        if(!company || !position){
+            return res.status(400).json({error:"Please fill all the fields"});
         }
-        job = req.body;
-        await job.save();
-        res.status(200).json({job});
+        if(!req.params.id){
+            return res.status(400).json({error:"Please provide job id"});
+        }
 
-    }
-    catch(error){
-        res.status(500).json({error});
+        let job = await Job.findOneAndUpdate({
+            _id:req.params.id,
+            createdBy:req.user.userId,
+        },{
+            company,
+            position
+        }, {
+            new: true,
+            runValidators: true,
+        });
+        if(!job){
+            return res.status(404).json({error:"Job not found"});
+        }
+        res.status(200).json({job});
+    } catch (error) {
+        res.status(500).json({
+            "msg":"something went wrong",
+            error
+        });
     }
 }
 
 let deleteJob = async (req,res)=>{
     try {
-        let job = await Job.findByIdAndDelete(req.params.id);
+        if(!req.params.id){
+            return res.status(400).json({error:"Please provide job id"});
+        }
+        let job = await Job.findOneAndRemove({
+            _id:req.params.id,
+            createdBy:req.user.userId
+        });
+        
+        // you can also return the deleted job
         res.status(200).json({
-            msg:"Job deleted successfully",
-            job
+            msg:"Job deleted successfully"
         });
     } catch (error) {
         res.status(500).json({error});
