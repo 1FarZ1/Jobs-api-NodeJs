@@ -15,6 +15,9 @@ const authMiddleware = require('./middlewares/auth');
 const app = express();
 const port = process.env.PORT || 5000;
 
+
+app.set("trust proxy", "1");
+
 app.use(express.static('./view'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
