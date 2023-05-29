@@ -4,6 +4,7 @@ const {  connectDb } = require('./db/mongoDb');
 
 const authRouter = require('./routes/auth');
 const jobsRouter = require('./routes/jobs');
+const authMiddleware = require('./middlewares/auth');
 
 
 const app = express();
@@ -14,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 
-app.use("/api/v1/jobs",jobsRouter);
+app.use("/api/v1/jobs",authMiddleware,jobsRouter);
 app.use("/api/v1/auth",authRouter);
 
 
