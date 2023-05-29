@@ -3,7 +3,7 @@ const Job = require('../models/job');
 
 let getJobs = async (req,res)=>{
     try {
-        let jobs = await Job.find();
+        let jobs = await Job.find({});
         res.status(200).json({jobs});
     } catch (error) {
         res.status(500).json(error);
@@ -21,9 +21,21 @@ let getJob = async (req,res)=>{
 
 let createJob = async (req,res)=>{
     try {
-        let job = await Job.create(req.body);
-        res.status(200).json({job});
+        const {company,position} = req.body;
+        if(!company || !position){
+            return res.status(400).json({error:"Please fill all the fields"});
+        }
+        console.log(req.user);
+        let jobTemp={
+            company,
+            position,
+            createdBy:req.user.userId,
+        }
+        console.log(jobTemp);
+        let job = await Job.create(jobTemp);
+        res.status(200).json(job);
     } catch (error) {
+        console.log(error)
         res.status(500).json({error});
     }
 }

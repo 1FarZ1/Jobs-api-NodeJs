@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
 
 let authMiddleware = (req,res,next)=>{
@@ -7,10 +8,14 @@ let authMiddleware = (req,res,next)=>{
         return res.status(401).json({error:"Unauthorized"});
     }
     try {
-        const decodedToken = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET);
-        req.user = decodedToken;
+        const decodedToken = jwt.verify(token,process.env.JWT_SECRET);
+        req.user =  {
+            userId:decodedToken.userId,    
+            name:decodedToken.name,
+        };
         next();
     } catch (error) {
+        console.log(error);
         res.status(500).json({error});
     }
 }

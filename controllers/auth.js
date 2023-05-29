@@ -21,18 +21,19 @@ let login  = async  (req,res)=>{
             return res.status(400).json({ msg: 'fill all the credentials' })
         }
 
-        const user  = await User.findOne(user => user.email == email);
+        const user  = await User.findOne({email});
         if(!user){
             return res.status(400).json({ msg: 'no user found' })
         }
         if (!user.comparePassword(password)) {
             return res.status(400).json({ msg: 'incorrect password' })
         }    
-        const token = user.createJwt();
+        const token = user.createJWT();
     
         return res.status(200).json({ msg: 'user logged in successfully ', token })
 
     } catch (error) {
+        console.log(error);
         return res.status(500).json({ msg: 'something went wrong',error })
         
     } 
